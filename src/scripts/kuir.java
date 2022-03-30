@@ -7,7 +7,7 @@ import javax.xml.transform.TransformerException;
 
 public class kuir {
 
-	public static void main(String[] args) throws ParserConfigurationException, IOException, TransformerException {
+	public static void main(String[] args) throws ParserConfigurationException, IOException, TransformerException, ClassNotFoundException {
 		
 		String command = args[0];   
 		String path = args[1];
@@ -19,6 +19,10 @@ public class kuir {
 		else if(command.equals("-k")) {
 			makeKeyword keyword = new makeKeyword(path);
 			keyword.convertXml();
+		}
+		else if(command.equals("-i")) {
+			indexer indexer = new indexer(path);
+			indexer.makePost();
 		}
 		
 	}
