@@ -10,12 +10,19 @@
 
 ```bash
 ├── README.md
+├── .gitignore
+├── data
+│  ├── 떡.html
+│  ├── 라면.html
+│  ├── 아이스크림.html
+│  ├── 초밥.html
+│  └── 파스타.html
 ├── jars
 └── src
     └── scripts
         ├── kuir.java
         ├── makeCollection.java
-        └── makeKeyword.java
+        ├── makeKeyword.java
         └── indexer.java
 ``` 
 
@@ -27,9 +34,9 @@
 
 **src/scrips** : .java 소스 파일이 저장되는 디렉토리
 
-**bin/** : 컴파일된 .class 바이너리 파일이 저장되는 디렉토리
 
-**jars/** : 외부 jar 파일이 저장되는 디렉토리
+**data/*.html** : html 파일 데이터가 저장되어 있는 디렉토리
+
 
 ## 컴파일 명령어
 
