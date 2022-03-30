@@ -10,8 +10,6 @@
 
 ```bash
 ├── README.md
-├── bin
-│   └── scripts
 ├── jars
 └── src
     └── scripts
