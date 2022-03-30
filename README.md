@@ -1,6 +1,6 @@
-# 2022 오픈소스 SW 수업자료
+# 2022 오픈소스 SW 수업
 
-2022-1학기 건국대학교 오픈소스 SW 수업에서 사용하는 클래스 구조의 샘플 파일입니다.
+2022-1학기 건국대학교 오픈소스 SW 수업 과제 제출용입니다.
 
 **kuir.java**가 프로젝트의 메인 소스 코드로 사용되고,
 
@@ -18,6 +18,7 @@
         ├── kuir.java
         ├── makeCollection.java
         └── makeKeyword.java
+        └── indexer.java
 ``` 
 
 ## 인코딩
@@ -40,26 +41,8 @@
 
 ex) `javac -cp jars/jsoup-1.13.1.jar:jars/kkma-2.1.jar src/scripts/*.java -d bin -encoding UTF8`
 
-### WINDOWS
+## 2~3주차 과제 제출본에 대하여
 
-`javac -cp (외부 jar 파일 이름 1):(외부 jar 파일 이름 2):,,,, src/scripts/*.java -d bin (-encoding UTF8)`
+2~3 주차 과제 제출본은 삭제한 관계로 해당 코드를 위의 형식에 맞추어 다시 리팩토링하여 현재 파일에 반영하였습니다.
+따라서 해당 내용은 makeCollection.java와 makeKeyword.java에서 확인할 수 있습니다.
 
-ex) `javac -cp jars/jsoup-1.13.1.jar:jars/kkma-2.1.jar src/scripts/*.java -d bin -encoding UTF8`
-
-`javac -cp "(외부 jar 파일 이름 1);(외부 jar 파일 이름 2);,,,," src/scripts/*.java -d bin (-encoding UTF8)`
-
-ex) `javac -cp "jars/jsoup-1.13.1.jar;jars/kkma-2.1.jar" src/scripts/*.java -d bin -encoding UTF8`
-
-## 실행 명령어
-
-### MAC
-
-`java -cp (외부 jar 파일 이름 1):(외부 jar 파일 이름 2):,,,,:bin scripts.kuir (args 1) (args 2) ,,, (args n)`
-
-ex) `java -cp ./jars/jsoup-1.13.1.jar:./jars/kkma-2.1.jar:bin scripts.kuir -c data`
-
-### WINDOWS
-
-`java -cp (외부 jar 파일 이름 1);(외부 jar 파일 이름 2);,,,,;bin scripts.kuir (args 1) (args 2) ,,, (args n)`
-
-ex) `java -cp ./jars/jsoup-1.13.1.jar;./jars/kkma-2.1.jar;bin scripts.kuir -c data`
