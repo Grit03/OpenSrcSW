@@ -32,6 +32,6 @@ data/.DS_Store
 src/.DS_Store
 
 # output files
-./collection.xml
-./index.xml
-./index.post
+collection.xml
+index.xml
+index.post
