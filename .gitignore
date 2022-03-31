@@ -30,8 +30,3 @@ hs_err_pid*
 .DS_Store
 data/.DS_Store
 src/.DS_Store
-
-# output files
-collection.xml
-index.xml
-index.post
