@@ -14,9 +14,7 @@ import java.util.Map.Entry;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
-import org.jsoup.select.Elements;
 import org.snu.ids.kkma.index.Keyword;
 import org.snu.ids.kkma.index.KeywordExtractor;
 import org.snu.ids.kkma.index.KeywordList;
@@ -41,9 +39,8 @@ public class searcher {
 		for(int i=0; i<kl.size(); i++) {
 			Keyword kwrd = kl.get(i);
 			queryKeyword.put(kwrd.getString() , kwrd.getCnt());
-//			System.out.println(kwrd.getString()+ " : "+  kwrd.getCnt());
 		}
-		
+
 		// Hashmap 반환
 		return queryKeyword;
 		
@@ -51,9 +48,9 @@ public class searcher {
 	
 	public double[] getDocIdsAndWeight (String docIdsAndWeightStr) {
 		String[] docIdsAndWeight = docIdsAndWeightStr.split(" ");
-		double[] docIdsAndWeightDoubleArr = new double[docIdsAndWeight.length];
-		for(int i=0; i<docIdsAndWeight.length; i++) {
-			docIdsAndWeightDoubleArr[i] = Double.parseDouble(docIdsAndWeight[i]);
+		double[] docIdsAndWeightDoubleArr = new double[docIdsAndWeight.length/2];
+		for(int i=0; i<docIdsAndWeight.length/2; i++) {
+			docIdsAndWeightDoubleArr[i] = Double.parseDouble(docIdsAndWeight[2*i+1]);
 		}
 		
 		return docIdsAndWeightDoubleArr;
@@ -62,30 +59,25 @@ public class searcher {
 	
 	
 	public double[] calcSim(HashMap<String, String> docKeywordHashMap, HashMap<String, Integer> queryKeyword) {
-		
 		double[] simArr = new double[5];
 		
 		Iterator<String> iterator = queryKeyword.keySet().iterator();
-		
 		while(iterator.hasNext()) {
 			int count = 0;
 			String queryKey = iterator.next();
 			String docIdAndWeightStr = docKeywordHashMap.get(queryKey);
 			if(docIdAndWeightStr!=null) {
-				double[] docIdsAndWeights= getDocIdsAndWeight(docIdAndWeightStr);
-				for(int i=0; i<docIdsAndWeights.length/2; i++) {
-					simArr[i] += (double) queryKeyword.get(queryKey)*docIdsAndWeights[i+1];
+				// weightsByDocID 를 가중치만 담게하고 인덱스 값을 문서 id로 삼음.
+				double[] weightsByDocID= getDocIdsAndWeight(docIdAndWeightStr);
+				for(int i=0; i<weightsByDocID.length; i++) {
+					simArr[i] += queryKeyword.get(queryKey)*weightsByDocID[i];
 				}
-			
 			}else {
 				System.out.println("This Keyword, " + queryKey + "is not found in the documents");
 			}
-			
 		}
-
 		return simArr;
-		
-	}
+	};
 	
 	public void getResemblance() throws IOException, ClassNotFoundException {
 	
@@ -104,7 +96,8 @@ public class searcher {
 		// query kkma 형태소 분석기 결과 얻기
 		HashMap<String, Integer> queryHashMap = kkmaForquery(query);
 		double[] simResult = calcSim(docKeywordHashMap, queryHashMap);
-		for(int i=0; i<simResult.length-1; i++) {
+		
+		for(int i=0; i<simResult.length; i++) {
 			innerProductByDoc.put(i, simResult[i]);
 		}
 
@@ -127,20 +120,21 @@ public class searcher {
 
 		System.out.println("\n========= 결과 출력 =========");
 		int count = 0;
+		
 		// 결과 출력
 		for(Entry<Integer, Double> entry : sortedResult) {
-			
-			if(count<3) {
-			String titleText = collection.select("doc#"+entry.getKey()+" > title").text();
-			System.out.println("Document Title : " + titleText + " -> 유사도: " + entry.getValue());
+			double similarity = entry.getValue();
+			if(similarity>0 && count<3) {
+				String titleText = collection.select("doc#"+entry.getKey()+" > title").text();
+				System.out.println("Document Title : " + titleText + " -> 유사도: " + String.format("%.2f", similarity));
+			}else if(similarity==0) {
+				if(count==sortedResult.size()-1) {
+					System.out.println("검색된 문서가 없습니다");
+			}
 			count++;
-			}else {
-				break;
 			}
 		}
 		
-		
 		System.out.println("5주차 실행완료");
-		
 	}
 }
