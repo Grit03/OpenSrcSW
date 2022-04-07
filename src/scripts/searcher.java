@@ -58,7 +58,7 @@ public class searcher {
 	}
 	
 	
-	public double[] calcSim(HashMap<String, String> docKeywordHashMap, HashMap<String, Integer> queryKeyword) {
+	public double[] InnerProduct(HashMap<String, String> docKeywordHashMap, HashMap<String, Integer> queryKeyword) {
 		double[] simArr = new double[5];
 		
 		Iterator<String> iterator = queryKeyword.keySet().iterator();
