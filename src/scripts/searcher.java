@@ -57,6 +57,16 @@ public class searcher {
 		
 	}
 	
+	public double[] InnerProduct(int queryWeight, double[] weightsByDocID) {
+		double[] simArr = new double[5];
+		
+		for(int i=0; i<weightsByDocID.length; i++) {
+			simArr[i] += queryWeight*weightsByDocID[i];
+			
+		}
+		
+		return simArr;
+	};
 	
 	public double[] calcSim(HashMap<String, String> docKeywordHashMap, HashMap<String, Integer> queryKeyword) {
 		
@@ -97,7 +107,9 @@ public class searcher {
 		}
 		
 		return cosineSim;
-	};
+	}
+	
+	
 	
 	public void getResemblance() throws IOException, ClassNotFoundException {
 	
@@ -158,3 +170,4 @@ public class searcher {
 		System.out.println("5주차 실행완료");
 	}
 }
+
