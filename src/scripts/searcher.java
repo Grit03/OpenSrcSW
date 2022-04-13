@@ -58,24 +58,14 @@ public class searcher {
 	}
 	
 	
-	public double[] InnerProduct(HashMap<String, String> docKeywordHashMap, HashMap<String, Integer> queryKeyword) {
+	public double[] InnerProduct(int queryWeight, double[] weightsByDocID) {
 		double[] simArr = new double[5];
 		
-		Iterator<String> iterator = queryKeyword.keySet().iterator();
-		while(iterator.hasNext()) {
-			int count = 0;
-			String queryKey = iterator.next();
-			String docIdAndWeightStr = docKeywordHashMap.get(queryKey);
-			if(docIdAndWeightStr!=null) {
-				// weightsByDocID 를 가중치만 담게하고 인덱스 값을 문서 id로 삼음.
-				double[] weightsByDocID= getDocIdsAndWeight(docIdAndWeightStr);
-				for(int i=0; i<weightsByDocID.length; i++) {
-					simArr[i] += queryKeyword.get(queryKey)*weightsByDocID[i];
-				}
-			}else {
-				System.out.println("This Keyword, " + queryKey + "is not found in the documents");
-			}
+		for(int i=0; i<weightsByDocID.length; i++) {
+			simArr[i] += queryWeight*weightsByDocID[i];
+			
 		}
+		
 		return simArr;
 	};
 	
