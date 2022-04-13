@@ -59,11 +59,11 @@ public class searcher {
 	
 	
 	public double[] calcSim(HashMap<String, String> docKeywordHashMap, HashMap<String, Integer> queryKeyword) {
-		double[] simArr = InnerProduct(docKeywordHashMap, queryKeyword);
 		
 		Iterator<String> iterator = queryKeyword.keySet().iterator();
 		
 		double queryKeywordLength = 0;
+		double[] simArr = new double[5];
 		double idLength[] = new double[5];
 		
 		while(iterator.hasNext()) {
@@ -74,6 +74,7 @@ public class searcher {
 				// weightsByDocID 를 가중치만 담게하고 인덱스 값을 문서 id로 삼음.
 				double[] weightsByDocID= getDocIdsAndWeight(docIdAndWeightStr);
 				for(int i=0; i<weightsByDocID.length; i++) {
+					simArr[i] += InnerProduct(queryKeyword.get(queryKey), weightsByDocID[i]);
 					idLength[i] = idLength[i] + Math.pow(weightsByDocID[i],2);
 					
 				}
